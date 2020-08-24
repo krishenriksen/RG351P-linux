@@ -589,17 +589,6 @@
 			3597 3640 3683 3726 3769 3812 3855
 			3898 3941 3984 4027 4070 4113 4158>;
 
-
-			/* KPL605475 Battery Spec */
-			/*
-				Capacity : 3.7V 3000mA
-				Normal Voltage = 3.7V
-				Cut-Off Voltage : 3.1V
-				Internal Impedance : 180 mOhm
-				Charging Voltage : 4.2V
-				Charging Voltage Max : 4.25V
-				Sample resister : 10 mohm
-			*/
 			design_capacity = <3450>;
 			design_qmax = <3795>;
 			bat_res = <100>;
