@@ -615,8 +615,6 @@
 			virtual_power = <0>;
 			sample_res = <10>;
 
-
-			/* P.C.B rev0.2 DC Detect & Charger Status LED GPIO */
 			dc_det_gpio  = <&gpio0 RK_PB3 GPIO_ACTIVE_HIGH>;
 			bat_low_gpio = <&gpio2 RK_PB5 GPIO_ACTIVE_HIGH>;
 
@@ -687,6 +685,11 @@
 	pmuio1-supply = <&vcc3v3_pmu>;
 	/* GPIO0_B/GPIO0_C, Flash */
 	pmuio2-supply = <&vcc3v3_pmu>;
+};
+
+/* LCD Motor PWM */
+&pwm0 {
+	status = "okay";
 };
 
 /* LCD Backlight PWM */
