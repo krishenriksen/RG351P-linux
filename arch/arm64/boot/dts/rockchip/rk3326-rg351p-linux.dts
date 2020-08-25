@@ -687,7 +687,7 @@
 	pmuio2-supply = <&vcc3v3_pmu>;
 };
 
-/* LCD Motor PWM */
+/* RG351P Motor PWM */
 &pwm0 {
 	status = "okay";
 };
