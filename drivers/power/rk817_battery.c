@@ -2016,25 +2016,25 @@ static int rk817_bat_get_charge_state(struct rk817_battery_device *battery)
 	return (battery->usb_in || battery->ac_in);
 }
 
-static int rg351p_battery_skip = 30000;
+//static int rg351p_battery_skip = 30000;
 static int rg351p_battery_pre_voltage = 5000;
 #define RG351_BAT_MAX_VOLTAGE 3900
 #define RG351_BAT_MIN_VOLTAGE 3300
-static int rk817_battery_rg351p_capacity_get(int voltage)
+static int rk817_battery_rg351p_capacity_get(int voltage,int charge_status)
 {
 	if(rg351p_battery_pre_voltage>=5000){
-		rg351p_battery_pre_voltage = voltage;
+		rg351p_battery_pre_voltage = RG351_BAT_MAX_VOLTAGE;
 	}
-	if(rg351p_battery_skip++ >= 30000){
-		if(voltage<3900 && voltage>3300){
+	//if(rg351p_battery_skip++ >= 30000){
+		if(voltage<3900 && voltage>3300 && (voltage<rg351p_battery_pre_voltage || charge_status)){
 			rg351p_battery_pre_voltage = voltage;
 		}else if(voltage>=3900){
 			rg351p_battery_pre_voltage = RG351_BAT_MAX_VOLTAGE;
 		}else if(voltage<=3300){
 			rg351p_battery_pre_voltage = RG351_BAT_MIN_VOLTAGE;
 		}
-		rg351p_battery_skip = 0;
-	}
+		//rg351p_battery_skip = 0;
+	//}
 	return (rg351p_battery_pre_voltage-RG351_BAT_MIN_VOLTAGE)/((RG351_BAT_MAX_VOLTAGE-RG351_BAT_MIN_VOLTAGE)/100);
 	
 }
@@ -2063,7 +2063,7 @@ static int rk817_battery_get_property(struct power_supply *psy,
 			val->intval = VIRTUAL_SOC;
 		*/
 		//dev_err(dev, "%d\n",battery->voltage_avg);
-		val->intval = rk817_battery_rg351p_capacity_get(battery->voltage_avg);
+		val->intval = rk817_battery_rg351p_capacity_get(battery->voltage_avg,rk817_bat_get_charge_state(battery));
 		
 		break;
 	case POWER_SUPPLY_PROP_HEALTH:
